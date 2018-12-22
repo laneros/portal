@@ -1,0 +1,9 @@
+{
+    "event_id": "home_page_url",
+    "execute_order": 10,
+    "callback_class": "Laneros\\Portal\\Listener",
+    "callback_method": "homePageUrl",
+    "active": true,
+    "hint": "",
+    "description": "Updates the home page URL to use the portal route"
+}

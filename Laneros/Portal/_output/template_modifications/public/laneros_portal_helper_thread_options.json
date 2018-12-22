@@ -1,0 +1,9 @@
+{
+    "template": "helper_thread_options",
+    "description": "Adds \"Featured\" checkbox to the helper_thread_options template",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "<xf:if is=\"$thread.canLockUnlock()\">",
+    "replace": "<xf:if is=\"($thread.isInsert() AND !$thread.Forum.laneros_portal_auto_feature AND $thread.canFeatureUnfeature())\n\tOR ($thread.isUpdate() && $thread.canFeatureUnfeature())\"\n>\n\t<xf:option label=\"Featured\" name=\"featured\" value=\"1\" selected=\"{$thread.laneros_portal_featured}\">\n\t\t<xf:hint>Featured threads will appear on the Portal page.</xf:hint>\n\t\t<xf:afterhtml>\n\t\t\t<xf:hiddenval name=\"_xfSet[featured]\" value=\"1\" />\n\t\t</xf:afterhtml>\n\t</xf:option>\n</xf:if>\n$0"
+}

@@ -1,0 +1,9 @@
+{
+    "template": "forum_edit",
+    "description": "Adds auto feature checkbox to the forum_edit template",
+    "execution_order": 10,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "<xf:option name=\"allow_posting\"",
+    "replace": "<xf:option name=\"laneros_portal_auto_feature\" selected=\"$forum.laneros_portal_auto_feature\"\n\tlabel=\"Automatically feature threads in this forum\"\n\thint=\"If selected, any new threads posted in this forum will be automatically featured.\" />\n$0"
+}

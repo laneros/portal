@@ -1,0 +1,9 @@
+{
+    "event_id": "entity_post_delete",
+    "execute_order": 10,
+    "callback_class": "Laneros\\Portal\\Listener",
+    "callback_method": "threadEntityPostDelete",
+    "active": true,
+    "hint": "XF\\Entity\\Thread",
+    "description": "Extends XF\\Entity\\Thread post delete"
+}

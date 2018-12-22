@@ -1,0 +1,12 @@
+{
+    "edit_format": "radio",
+    "edit_format_params": "featured_date={{ phrase('laneros_portal_featured_date') }}\npost_date={{ phrase('laneros_portal_post_date') }}",
+    "data_type": "string",
+    "sub_options": [],
+    "validation_class": "",
+    "validation_method": "",
+    "default_value": "featured_date",
+    "relations": {
+        "lanerosPortal": 10
+    }
+}
