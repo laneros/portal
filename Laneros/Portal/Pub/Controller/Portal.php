@@ -35,6 +35,6 @@ class Portal extends \XF\Pub\Controller\AbstractController
 			'page' => $page,
 			'perPage' => $perPage
 		];
-		return $this->view('Laneros\Portal:View', 'laneros_portal_view', $viewParams);
+		return $this->view('Laneros\Portal:Portal\View', 'laneros_portal_view', $viewParams);
 	}
 }

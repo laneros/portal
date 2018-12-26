@@ -1,4 +1,14 @@
+<xf:css src="laneros_portal_view.less" />
+
 <xf:js src="laneros/portal/packery.pkgd.js" min="1" addon="Laneros/Portal" />
+
+<xf:js>
+$('.p-body-pageContent').packery({
+	// options
+	itemSelector: '.block',
+	gutter: 10
+});
+</xf:js>
 
 <xf:h1>{$xf.options.boardTitle}</xf:h1>
 
@@ -10,6 +20,7 @@
 			arg-thread="{$featuredThread.Thread}"
 			arg-post="{$featuredThread.Thread.FirstPost}"
 			arg-featuredThread="{$featuredThread}"
+			arg-portalImages="{$portalImages}"
 		/>
 	</xf:foreach>
 
@@ -18,12 +29,15 @@
 	<div class="blockMessage">No threads have been featured yet.</div>
 </xf:if>
 
-<xf:macro name="thread_block" arg-thread="!" arg-post="!" arg-featuredThread="!">
+<xf:macro name="thread_block" arg-thread="!" arg-post="!" arg-featuredThread="!" arg-portalImages="!">
 	<xf:css src="message.less" />
 
 	<div class="block">
 		<div class="block-container" data-xf-init="lightbox">
-			<h4 class="block-header"><a href="{{ link('threads', $thread) }}">{$thread.title}</a></h4>
+			<a href="{{ link('threads', $thread) }}">
+				<h4 class="block-header">{$thread.title}</h4>
+				<img src="{$portalImages.{$thread.thread_id}}" alt="{$thread.title}">
+			</a>
 			<div class="block-body">
 				<xf:macro name="message"
 					arg-post="{$post}"
@@ -32,7 +46,11 @@
 				/>
 			</div>
 			<div class="block-footer">
-				<a href="{{ link('threads', $thread) }}">Continue reading...</a>
+				<xf:if is="$xf.options.lanerosPortalDefaultSort == 'featured_date'">
+					<xf:date time="{$featuredThread.featured_date}" />
+				<xf:else />
+					<xf:date time="{$thread.post_date}" />
+				</xf:if>
 			</div>
 		</div>
 	</div>
@@ -43,27 +61,6 @@
 		<div class="message-inner">
 			<div class="message-cell message-cell--main">
 				<div class="message-content js-messageContent">
-					<div class="message-attribution">
-						<div class="contentRow contentRow--alignMiddle">
-							<div class="contentRow-figure">
-								<xf:avatar user="{$post.User}" size="xxs" defaultname="{$post.username}" href="" />
-							</div>
-							<div class="contentRow-main contentRow-main--close">
-								<ul class="listInline listInline--bullet u-muted">
-									<li><xf:username user="{$thread.User}" /></li>
-									<li>
-										<xf:if is="$xf.options.lanerosPortalDefaultSort == 'featured_date'">
-											<xf:date time="{$featuredThread.featured_date}" />
-										<xf:else />
-											<xf:date time="{$thread.post_date}" />
-										</xf:if>
-									</li>
-									<li><a href="{{ link('forums', $thread.Forum) }}">{$thread.Forum.title}</a></li>
-									<li>{{ phrase('replies:') }} {$thread.reply_count|number}</li>
-								</ul>
-							</div>
-						</div>
-					</div>
 					<div class="message-userContent lbContainer js-lbContainer"
 						 data-lb-id="post-{$post.post_id}"
 						 data-lb-caption-desc="{{ $post.User ? $post.User.username : $post.username }} &middot; {{ date_time($post.post_date) }}"
