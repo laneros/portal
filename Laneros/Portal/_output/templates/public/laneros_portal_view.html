@@ -36,7 +36,9 @@ $('.p-body-pageContent').packery({
 		<div class="block-container" data-xf-init="lightbox">
 			<a href="{{ link('threads', $thread) }}">
 				<h4 class="block-header">{$thread.title}</h4>
-				<img src="{$portalImages.{$thread.thread_id}}" alt="{$thread.title}">
+				<xf:if contentcheck="true">
+					<img src="<xf:contentcheck>{$portalImages.{$thread.thread_id}}</xf:contentcheck>" alt="{$thread.title}">
+				</xf:if>
 			</a>
 			<div class="block-body">
 				<xf:macro name="message"
