@@ -3,10 +3,12 @@
 <xf:js src="laneros/portal/packery.pkgd.js" min="1" addon="Laneros/Portal" />
 
 <xf:js>
-$('.p-body-pageContent').packery({
-	// options
-	itemSelector: '.block',
-	gutter: 10
+$( document ).ready(function() {
+	$('.p-body-pageContent').packery({
+		// options
+		itemSelector: '.block',
+		gutter: 10
+	});
 });
 </xf:js>
 
