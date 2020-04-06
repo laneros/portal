@@ -1,8 +1,21 @@
 .p-body-content
 {
+  position: relative;
+
   .block
   {
-    width: 49%;
+    display: block;
+    position: absolute;
+    width: 47%;
+    margin: 6px 10px;
+    z-index: 1;
+
+    .block-container
+    {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
 
     .block-header
     {

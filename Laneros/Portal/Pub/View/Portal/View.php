@@ -6,6 +6,9 @@ class View extends \XF\Mvc\View
 {
     public function renderHtml()
     {
+        $app = \XF::app();
+        $stringFormatter = $app->stringFormatter();
+
         $router = \XF::app()->router('public');
 
         /** @var \Laneros\Portal\Repository\FeaturedThread $thread */
@@ -22,15 +25,17 @@ class View extends \XF\Mvc\View
             {
                 preg_match_all('#\[attach[^\]]*\](?P<id>\d+)(\D.*)?\[/attach\]#iU', $message, $matches);
 
-                if (empty($matches['id'])) {
-                    // No encontramos una imagen
-                    // @TODO: No debemos eliminarla sino mostrar un placeholder
-                    //unset($this->params['featuredThreads'][$key]);
-                    continue;
-                } else {
+                if (! empty($matches['id'])) {
                     $this->params['portalImages'][$key] = $router->buildLink('full:attachments', ['attachment_id' => $matches['id'][0]]);
                 }
             }
+
+            // Eliminamos todos los tags innecesarios del mensaje
+            $stripBbCodeOptions = [
+                'stripQuote' => true,
+            ];
+
+            $thread->Thread->FirstPost->message = $stringFormatter->stripBbCode($message, $stripBbCodeOptions);
         }
     }
 }

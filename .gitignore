@@ -41,3 +41,15 @@ cache
 #xenforo
 _metadata.json
 extension_hint.php
+_build
+_releases
+_data
+
+#composer
+vendor
+
+#bower
+bower_components
+
+#npm
+node_modules

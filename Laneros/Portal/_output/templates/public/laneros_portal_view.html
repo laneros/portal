@@ -1,13 +1,17 @@
 <xf:css src="laneros_portal_view.less" />
 
-<xf:js src="laneros/portal/packery.pkgd.js" min="1" addon="Laneros/Portal" />
+<xf:js src="Laneros/Portal/node_modules/muuri/dist/muuri.js" min="1" addon="Laneros/Portal" />
 
 <xf:js>
-$('.p-body-pageContent').packery({
-	// options
-	itemSelector: '.block',
-	gutter: 10
-});
+	jQuery(document).ready(function() {
+		var grid = new Muuri('.p-body-pageContent', {
+		items: '.block',
+		containerClass: 'block-container',
+		layout: {
+		fillGaps: true,
+		}
+		});
+	});
 </xf:js>
 
 <xf:h1>{$xf.options.boardTitle}</xf:h1>

@@ -1,8 +1,8 @@
 {
   "additional_files": [
-    "js/laneros/portal"
+    "js/Laneros/Portal"
   ],
   "minify": [
-    "js/laneros/portal/packery.pkgd.js"
+    "js/Laneros/Portal/node_modules/muuri/dist/muuri.js"
   ]
 }
