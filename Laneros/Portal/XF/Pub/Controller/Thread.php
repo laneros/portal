@@ -4,7 +4,7 @@ namespace Laneros\Portal\XF\Pub\Controller;
 
 class Thread extends XFCP_Thread
 {
-	public function setupThreadEdit(\XF\Entity\Thread $thread)
+	protected function setupThreadEdit(\XF\Entity\Thread $thread)
 	{
 		/** @var \Laneros\Portal\XF\Service\Thread\Editor $editor */
 		$editor = parent::setupThreadEdit($thread);
@@ -19,7 +19,7 @@ class Thread extends XFCP_Thread
 		return $editor;
 	}
 
-	public function finalizeThreadReply(\XF\Service\Thread\Replier $replier)
+    protected function finalizeThreadReply(\XF\Service\Thread\Replier $replier)
 	{
 		parent::finalizeThreadReply($replier);
 

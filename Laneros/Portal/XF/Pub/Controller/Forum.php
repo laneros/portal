@@ -4,7 +4,7 @@ namespace Laneros\Portal\XF\Pub\Controller;
 
 class Forum extends XFCP_Forum
 {
-	public function setupThreadCreate(\XF\Entity\Forum $forum)
+    protected function setupThreadCreate(\XF\Entity\Forum $forum)
 	{
 		/** @var \Laneros\Portal\XF\Service\Thread\Creator $creator */
 		$creator = parent::setupThreadCreate($forum);
