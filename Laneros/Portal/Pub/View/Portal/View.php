@@ -15,10 +15,10 @@ class View extends \XF\Mvc\View
 
         $formatter = new Formatter();
 
-        /** @var \Laneros\Portal\Repository\FeaturedThread $thread */
-        foreach($this->params['featuredThreads'] AS $key => &$thread)
+        /** @var \Laneros\Portal\Repository\FeaturedThread $featuredThread */
+        foreach($this->params['featuredThreads'] AS $key => &$featuredThread)
         {
-            $message = $thread->Thread->FirstPost->message;
+            $message = $featuredThread->Thread->FirstPost->message;
 
             // Sacamos la primra imagen del post sea de IMG o ATTACH
             preg_match('/\[(img|IMG)\]\s*(https?:\/\/([^*\r\n]+|[a-z0-9\/\\\._\- !]+))\[\/(img|IMG)\]/', $message, $matches);
@@ -26,9 +26,9 @@ class View extends \XF\Mvc\View
             $this->params['portalImages'][$key] = isset($matches[2]) ? $matches[2] : '';
 
             // Limpiamos el mensaje de bbcodes / imagenes / espacios
-            $thread->Thread->FirstPost->message = $formatter->stripBbCode($message, ['stripQuote' => true, ]);
+            $featuredThread->Thread->FirstPost->message = $formatter->stripBbCode($message, ['stripQuote' => true, ]);
 
-            if (empty($thread['portalImages']))
+            if (empty($featuredThread['portalImages']))
             {
                 preg_match_all('#\[attach[^\]]*\](?P<id>\d+)(\D.*)?\[/attach\]#iU', $message, $matches);
 
@@ -42,7 +42,12 @@ class View extends \XF\Mvc\View
                 'stripQuote' => true,
             ];
 
-            $thread->Thread->FirstPost->message = $stringFormatter->stripBbCode($message, $stripBbCodeOptions);
+            $featuredThread->Thread->FirstPost->message = $stringFormatter->stripBbCode($message, $stripBbCodeOptions);
+
+            if (! empty($featuredThread->featured_title))
+            {
+                $featuredThread->Thread->title = $featuredThread->featured_title;
+            }
         }
     }
 }

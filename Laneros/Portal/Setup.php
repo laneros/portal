@@ -33,6 +33,7 @@ class Setup extends \XF\AddOn\AbstractSetup
 		{
 			$table->addColumn('thread_id', 'int');
 			$table->addColumn('featured_date', 'int');
+			$table->addColumn('featured_title', 'text');
 			$table->addPrimaryKey('thread_id');
 		});
 	}

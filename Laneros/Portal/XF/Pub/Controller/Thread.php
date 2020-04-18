@@ -13,6 +13,7 @@ class Thread extends XFCP_Thread
 		if ($canFeatureUnfeature)
 		{
 			$editor->setFeatureThread($this->filter('featured', 'bool'));
+            $editor->setFeatureTitle($this->filter('featured_title', 'str'));
 		}
 
 		return $editor;
