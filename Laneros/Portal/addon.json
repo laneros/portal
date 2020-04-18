@@ -4,6 +4,7 @@
     "description": "Addon de noticias para Laneros.com.",
     "version_string": "1.0.0 Alpha",
     "version_id": 1000010,
+    "dev": "JulianD",
     "dev_url": "",
     "faq_url": "",
     "support_url": "",
