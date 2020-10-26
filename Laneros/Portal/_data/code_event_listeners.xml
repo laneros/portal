@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<code_event_listeners>
-  <listener event_id="entity_post_delete" execute_order="10" callback_class="Laneros\Portal\Listener" callback_method="threadEntityPostDelete" active="1" hint="XF\Entity\Thread" description="Extends XF\Entity\Thread post delete"/>
-  <listener event_id="entity_post_save" execute_order="10" callback_class="Laneros\Portal\Listener" callback_method="threadEntityPostSave" active="1" hint="XF\Entity\Thread" description="Extends XF\Entity\Thread post save"/>
-  <listener event_id="entity_structure" execute_order="10" callback_class="Laneros\Portal\Listener" callback_method="forumEntityStructure" active="1" hint="XF\Entity\Forum" description="Extends the XF\Entity\Forum structure"/>
-  <listener event_id="entity_structure" execute_order="10" callback_class="Laneros\Portal\Listener" callback_method="threadEntityStructure" active="1" hint="XF\Entity\Thread" description="Extends the XF\Entity\Thread structure"/>
-  <listener event_id="home_page_url" execute_order="10" callback_class="Laneros\Portal\Listener" callback_method="homePageUrl" active="1" description="Updates the home page URL to use the portal route"/>
-</code_event_listeners>
