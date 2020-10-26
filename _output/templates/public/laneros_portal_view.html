@@ -6,7 +6,7 @@
 	jQuery(document).ready(function() {
 		var grid = new Muuri('.p-body-pageContent', {
 		items: '.block',
-		containerClass: 'block-container',
+		containerClass: '',
 		layout: {
 		fillGaps: true,
 		}
@@ -52,6 +52,8 @@
 				/>
 			</div>
 			<div class="block-footer">
+				{{ phrase('by_user_x', {'name': $thread.username}) }}
+
 				<xf:if is="$xf.options.lanerosPortalDefaultSort == 'featured_date'">
 					<xf:date time="{$featuredThread.featured_date}" />
 				<xf:else />
@@ -72,10 +74,17 @@
 						 data-lb-caption-desc="{{ $post.User ? $post.User.username : $post.username }} &middot; {{ date_time($post.post_date) }}"
 					>
 						<blockquote class="message-body">
-							{{ bb_code($post.message, 'post', $post.User, {
-								'attachments': $post.attach_count ? $post.Attachments : [],
-								'viewAttachments': $thread.canViewAttachments()
-							}) }}
+							<xf:if is="$xf.options.lanerosPortalSnippet.length > 0">
+								{{ bb_code_snippet($post.message, 'post', $post, {$xf.options.lanerosPortalSnippet.length}, {
+									'attachments': $post.attach_count ? $post.Attachments : [],
+									'viewAttachments': $thread.canViewAttachments()
+								}) }}
+							<xf:else />
+								{{ bb_code($post.message, 'post', $post.User, {
+									'attachments': $post.attach_count ? $post.Attachments : [],
+									'viewAttachments': $thread.canViewAttachments()
+								}) }}
+							</xf:if>
 						</blockquote>
 					</div>
 				</div>

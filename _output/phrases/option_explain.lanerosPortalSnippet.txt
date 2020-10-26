@@ -1,0 +1,1 @@
+The maximum number of characters to display when viewing a news in the portal. Use 0 to display the entire content.
