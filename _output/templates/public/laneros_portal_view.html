@@ -44,7 +44,7 @@
 	<div class="block">
 		<div class="block-container" data-xf-init="lightbox">
 			<a href="{{ link('threads', $thread) }}">
-				<h4 class="block-header">{$thread.title}</h4>
+				<h4 class="block-header"><xf:if is="$featuredThread.featured_title is empty">{$thread.title}<xf:else />{$featuredThread.featured_title}</xf:if></h4>
 				<xf:if contentcheck="true">
 					<img src="<xf:contentcheck>{$portalImages.{$thread.thread_id}}</xf:contentcheck>" alt="{$thread.title}">
 				</xf:if>

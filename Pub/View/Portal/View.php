@@ -50,11 +50,6 @@ class View extends \XF\Mvc\View
             } else {
                 $featuredThread->Thread->FirstPost->message = '';
             }
-
-            if (! empty($featuredThread->featured_title))
-            {
-                $featuredThread->Thread->title = $featuredThread->featured_title;
-            }
         }
     }
 }
