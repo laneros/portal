@@ -3,15 +3,20 @@
 <xf:js src="Laneros/Portal/node_modules/muuri/dist/muuri.js" min="1" addon="Laneros/Portal" />
 
 <xf:js>
-	jQuery(document).ready(function() {
+	(function () {
 		var grid = new Muuri('.p-body-pageContent', {
-		items: '.block',
-		containerClass: '',
-		layout: {
-		fillGaps: true,
-		}
+			items: '.block',
+			layout: {
+				fillGaps: true,
+			},
+			layoutDuration: 0
 		});
-	});
+	
+		jQuery(window).on("load", function() {
+			grid.refreshItems();
+			grid.layout(true);
+		});
+	})();
 </xf:js>
 
 <xf:h1>{$xf.options.boardTitle}</xf:h1>
