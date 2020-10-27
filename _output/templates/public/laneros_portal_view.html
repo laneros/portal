@@ -64,6 +64,12 @@
 				<xf:else />
 					<xf:date time="{$thread.post_date}" />
 				</xf:if>
+				
+				<span class="block-footer-controls">
+					<a href="{{ link('threads/edit', $thread) }}" data-xf-click="overlay">
+						<xf:fa icon="fa-cog"/>
+					</a>
+				</span>
 			</div>
 		</div>
 	</div>

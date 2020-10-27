@@ -5,7 +5,8 @@ namespace Laneros\Portal\XF\Service\Thread;
 class Editor extends XFCP_Editor
 {
     protected $featureThread;
-    protected $featuredTitle;
+	protected $featuredTitle;
+	protected $snippet;
 
     public function setFeatureThread($featureThread)
     {
@@ -15,7 +16,12 @@ class Editor extends XFCP_Editor
     public function setFeatureTitle($featuredTitle)
     {
         $this->featuredTitle = $featuredTitle;
-    }
+	}
+
+	public function setSnippet($snippet)
+	{
+		$this->snippet = $snippet;
+	}
 
 	protected function _save()
 	{
@@ -33,7 +39,8 @@ class Editor extends XFCP_Editor
                     $thread->fastUpdate('laneros_portal_featured', true);
                 }
 
-                $featuredThread->set('featured_title', $this->featuredTitle);
+				$featuredThread->set('featured_title', $this->featuredTitle);
+				$featuredThread->set('snippet', $this->snippet);
                 $featuredThread->save();
             }
 			else

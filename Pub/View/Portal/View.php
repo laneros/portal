@@ -45,6 +45,10 @@ class View extends \XF\Mvc\View
                 'stripQuote' => true,
             ];
 
+            if (!empty($featuredThread->snippet)) {
+                $message = $featuredThread->snippet;
+            }
+
             if ($snippet['enabled'] == true) {
                 $featuredThread->Thread->FirstPost->message = $stringFormatter->stripBbCode($message, $stripBbCodeOptions);
             } else {
