@@ -14,8 +14,8 @@ class FeaturedThread extends \XF\Mvc\Entity\Entity
 		$structure->columns = [
 			'thread_id' => ['type' => self::UINT, 'required' => true],
 			'featured_date' => ['type' => self::UINT, 'default' => time()],
-			'featured_title' => ['type' => self::STR],
-			'snippet' => ['type' => self::STR],
+			'featured_title' => ['type' => self::STR, 'default' => ''],
+			'snippet' => ['type' => self::STR, 'default' => ''],
 		];
 		$structure->getters = [];
 		$structure->relations = [
