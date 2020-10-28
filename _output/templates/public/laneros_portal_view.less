@@ -10,8 +10,18 @@
     margin: 0 6px 10px 0;
     z-index: 1;
 
+	&.sticky
+	{
+		width: 96.6%;  
+	}
+
 	@media (max-width: @xf-responsiveWide) {
 		width: 48.2%;
+		
+		&.sticky
+		{
+			width: 97%;  
+		}
 	}
 
 	@media (max-width: 360px) {

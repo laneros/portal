@@ -12,11 +12,11 @@ class FeaturedThread extends Finder
 
 		if ($options->lanerosPortalDefaultSort == 'featured_date')
 		{
-			$this->setDefaultOrder('featured_date', $direction);
+			$this->setDefaultOrder([['sticky', 'DESC'], ['featured_date', $direction]]);
 		}
 		else
 		{
-			$this->setDefaultOrder('Thread.post_date', $direction);
+			$this->setDefaultOrder([['sticky', 'DESC'], ['Thread.post_date', $direction]]);
 		}
 
 		return $this;

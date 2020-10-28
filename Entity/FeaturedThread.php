@@ -16,6 +16,7 @@ class FeaturedThread extends \XF\Mvc\Entity\Entity
 			'featured_date' => ['type' => self::UINT, 'default' => time()],
 			'featured_title' => ['type' => self::STR, 'default' => ''],
 			'snippet' => ['type' => self::STR, 'default' => ''],
+			'sticky' => ['type' => self::UINT, 'default' => 0]
 		];
 		$structure->getters = [];
 		$structure->relations = [
@@ -28,5 +29,17 @@ class FeaturedThread extends \XF\Mvc\Entity\Entity
 		];
 
 		return $structure;
+	}
+
+	protected function _preSave()
+	{
+		if ($this->isChanged('sticky') && $this->sticky == 2)
+		{
+			$this->db()->update(
+				'xf_laneros_portal_featured_thread',
+				['sticky' => 1],
+				'sticky = 2'
+			);
+		}
 	}
 }

@@ -35,7 +35,10 @@ class Setup extends \XF\AddOn\AbstractSetup
 			$table->addColumn('featured_date', 'int');
 			$table->addColumn('featured_title', 'text');
 			$table->addColumn('snippet', 'text');
+			$table->addColumn('sticky', 'tinyint')->setDefault(0);
 			$table->addPrimaryKey('thread_id');
+			$table->addKey(['featured_date', 'sticky'], 'featured_date_sticky');
+			$table->addKey('sticky');
 		});
 	}
 	

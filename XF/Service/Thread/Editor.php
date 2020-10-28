@@ -7,6 +7,7 @@ class Editor extends XFCP_Editor
     protected $featureThread;
 	protected $featuredTitle;
 	protected $snippet;
+	protected $featuredSticky;
 
     public function setFeatureThread($featureThread)
     {
@@ -23,15 +24,20 @@ class Editor extends XFCP_Editor
 		$this->snippet = $snippet;
 	}
 
+	public function setFeaturedSticky($sticky)
+	{
+		$this->featuredSticky = $sticky;
+	}
+
 	protected function _save()
 	{
 		$thread = parent::_save();
 
-		if ($this->featureThread !== null && $thread->discussion_state == 'visible')
-		{
-			/** @var \Laneros\Portal\Entity\FeaturedThread $featuredThread */
-			$featuredThread = $thread->getRelationOrDefault('FeaturedThread', false);
+		/** @var \Laneros\Portal\Entity\FeaturedThread $featuredThread */
+		$featuredThread = $thread->getRelationOrDefault('FeaturedThread', false);
 
+		//This takes care of the Edit Thread modal
+		if ($this->featureThread !== null && $thread->discussion_state == 'visible') {
 			if ($this->featureThread)
 			{
 				if (!$featuredThread->exists())
@@ -41,7 +47,6 @@ class Editor extends XFCP_Editor
 
 				$featuredThread->set('featured_title', $this->featuredTitle);
 				$featuredThread->set('snippet', $this->snippet);
-                $featuredThread->save();
             }
 			else
 			{
@@ -51,6 +56,15 @@ class Editor extends XFCP_Editor
 					$thread->fastUpdate('laneros_portal_featured', false);
 				}
 			}
+		}
+
+		if ($featuredThread->exists()) {
+			//Check if we need to update the sticky status of an portal article
+			if ($this->featuredSticky !== null) {
+				$featuredThread->set('sticky', $this->featuredSticky);
+			}
+
+			$featuredThread->save();
 		}
 
 		return $thread;

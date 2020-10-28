@@ -2,6 +2,8 @@
 
 namespace Laneros\Portal\XF\Pub\Controller;
 
+use XF\Mvc\ParameterBag;
+
 class Thread extends XFCP_Thread
 {
 	protected function setupThreadEdit(\XF\Entity\Thread $thread)
@@ -35,6 +37,42 @@ class Thread extends XFCP_Thread
 			{
 				$replier->setFeatureThread($this->filter('featured', 'bool'));
 			}
+		}
+	}
+
+	public function actionFeaturedStick(ParameterBag $params)
+	{
+		$thread = $this->assertViewableThread($params->thread_id);
+		if (!$thread->canStickUnstick($error)) {
+			return $this->noPermission($error);
+		}
+
+		if ($this->isPost()) {
+			/** @var \Laneros\Portal\XF\Service\Thread\Editor $editor */
+			$editor = $this->getEditorService($thread);
+
+			$sticky = $this->filter('featured_sticky', 'int');
+			$sticky = empty($sticky) ? 0 : $sticky;
+
+			$editor->setFeaturedSticky($sticky);
+
+			if (!$editor->validate($errors)) {
+				return $this->error($errors);
+			}
+
+			$editor->save();
+
+			$reply = $this->redirect($this->getDynamicRedirect());
+			return $reply;
+		} else {
+			/** @var \XF\Repository\Node $nodeRepo */
+			$nodeRepo = $this->app()->repository('XF:Node');
+			$nodes = $nodeRepo->getFullNodeList()->filterViewable();
+
+			$viewParams = [
+				'thread' => $thread
+			];
+			return $this->view('Laneros\Portal:Thread\FeaturedSticky', 'laneros_portal_thread_featured_sticky', $viewParams);
 		}
 	}
 }

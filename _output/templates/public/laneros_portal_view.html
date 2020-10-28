@@ -43,7 +43,7 @@
 <xf:macro name="thread_block" arg-thread="!" arg-post="!" arg-featuredThread="!" arg-portalImages="!">
 	<xf:css src="message.less" />
 
-	<div class="block">
+	<div class="block <xf:if is="$featuredThread.sticky == 2">sticky</xf:if>">
 		<div class="block-container" data-xf-init="lightbox">
 			<a href="{{ link('threads', $thread) }}">
 				<h4 class="block-header"><xf:if is="$featuredThread.featured_title is empty">{$thread.title}<xf:else />{$featuredThread.featured_title}</xf:if></h4>
@@ -68,9 +68,16 @@
 				</xf:if>
 				
 				<span class="block-footer-controls">
-					<a href="{{ link('threads/edit', $thread) }}" data-xf-click="overlay">
+					<a data-xf-click="menu">
 						<xf:fa icon="fa-cog"/>
 					</a>
+					<div class="menu" data-menu="menu" aria-hidden="true">
+						<div class="menu-content">
+							<h3 class="menu-header">{{ phrase('laneros_portal_article_tools') }}</h3>
+							<a href="{{ link('threads/edit', $thread) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('laneros_portal_edit_article') }}</a>
+							<a href="{{ link('threads/featured-stick', $thread) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('laneros_portal_stick_article') }}</a>
+						</div>
+					</div>
 				</span>
 			</div>
 		</div>
