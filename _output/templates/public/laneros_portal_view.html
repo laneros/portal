@@ -45,6 +45,9 @@
 
 	<div class="block <xf:if is="$featuredThread.sticky == 2">sticky</xf:if>">
 		<div class="block-container" data-xf-init="lightbox">
+			<div class="block-minorHeader">
+				{{ prefix_class('thread', $thread) }}
+			</div>
 			<a href="{{ link('threads', $thread) }}">
 				<h4 class="block-header"><xf:if is="$featuredThread.featured_title is empty">{$thread.title}<xf:else />{$featuredThread.featured_title}</xf:if></h4>
 				<xf:if contentcheck="true">

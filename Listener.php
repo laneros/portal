@@ -3,6 +3,7 @@
 namespace Laneros\Portal;
 
 use XF\Mvc\Entity\Entity;
+use XF\Container;
 
 class Listener
 {
@@ -52,5 +53,16 @@ class Listener
 	public static function homePageUrl(&$homePageUrl, \XF\Mvc\Router $router)
 	{
 		$homePageUrl = $router->buildLink('canonical:portal');
+	}
+
+	public static function app_setup(\XF\App $app)
+	{
+		$app->container()->set('prefixes.group', $app->fromRegistry('threadPrefixGroups', function (Container $c) {
+			return $c['em']->getRepository('XF:ThreadPrefix')->rebuildPrefixGroupCache();
+		}));
+
+		$laneros = $app->container()->getOriginal('prefixes.group');
+
+		return true;
 	}
 }

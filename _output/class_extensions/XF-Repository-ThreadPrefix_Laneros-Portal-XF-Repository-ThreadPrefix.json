@@ -1,0 +1,6 @@
+{
+    "from_class": "XF\\Repository\\ThreadPrefix",
+    "to_class": "Laneros\\Portal\\XF\\Repository\\ThreadPrefix",
+    "execute_order": 10,
+    "active": true
+}
