@@ -1,3 +1,5 @@
+<xf:h1 hidden="true" />
+
 <xf:css src="laneros_portal_view.less" />
 
 <xf:js src="Laneros/Portal/node_modules/muuri/dist/muuri.js" min="1" addon="Laneros/Portal" />
@@ -20,8 +22,6 @@
 		});
 	})();
 </xf:js>
-
-<xf:h1>{$xf.options.boardTitle}</xf:h1>
 
 <xf:widgetpos id="laneros_portal_view_sidebar" position="sidebar" />
 
@@ -70,6 +70,7 @@
 					<xf:date time="{$thread.post_date}" />
 				</xf:if>
 				
+				<xf:if contentcheck="true">
 				<span class="block-footer-controls">
 					<a data-xf-click="menu">
 						<xf:fa icon="fa-cog"/>
@@ -77,11 +78,18 @@
 					<div class="menu" data-menu="menu" aria-hidden="true">
 						<div class="menu-content">
 							<h3 class="menu-header">{{ phrase('laneros_portal_article_tools') }}</h3>
-							<a href="{{ link('threads/edit', $thread) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('laneros_portal_edit_article') }}</a>
-							<a href="{{ link('threads/featured-stick', $thread) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('laneros_portal_stick_article') }}</a>
+							<xf:contentcheck>
+							<xf:if is="$thread.canEdit()">
+								<a href="{{ link('threads/edit', $thread) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('laneros_portal_edit_article') }}</a>
+							</xf:if>
+							<xf:if is="$thread.canFeatureUnfeature()">
+								<a href="{{ link('threads/featured-stick', $thread) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('laneros_portal_stick_article') }}</a>
+							</xf:if>
+							</xf:contentcheck>
 						</div>
 					</div>
 				</span>
+				</xf:if>
 			</div>
 		</div>
 	</div>
