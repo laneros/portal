@@ -36,6 +36,13 @@ class Editor extends XFCP_Editor
 		/** @var \Laneros\Portal\Entity\FeaturedThread $featuredThread */
 		$featuredThread = $thread->getRelationOrDefault('FeaturedThread', false);
 
+		if ($featuredThread->exists()) {
+			//Check if we need to update the sticky status of an portal article
+			if ($this->featuredSticky !== null) {
+				$featuredThread->set('sticky', $this->featuredSticky);
+			}
+		}
+
 		//This takes care of the Edit Thread modal
 		if ($this->featureThread !== null && $thread->discussion_state == 'visible') {
 			if ($this->featureThread)
@@ -58,15 +65,10 @@ class Editor extends XFCP_Editor
 			}
 		}
 
-		if ($featuredThread->exists()) {
-			//Check if we need to update the sticky status of an portal article
-			if ($this->featuredSticky !== null) {
-				$featuredThread->set('sticky', $this->featuredSticky);
-			}
-
+		if (!$featuredThread->isDeleted()) {
 			$featuredThread->save();
 		}
-
+		
 		return $thread;
 	}
 }
