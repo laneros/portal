@@ -1,8 +1,5 @@
 {
   "additional_files": [
     "js/Laneros/Portal"
-  ],
-  "minify": [
-    "js/Laneros/Portal/node_modules/muuri/dist/muuri.js"
   ]
 }
