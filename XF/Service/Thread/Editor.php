@@ -47,7 +47,7 @@ class Editor extends XFCP_Editor
 		if ($this->featureThread !== null && $thread->discussion_state == 'visible') {
 			if ($this->featureThread)
 			{
-				if (!$featuredThread->exists())
+				if ($thread->laneros_portal_featured == false)
 				{
                     $thread->fastUpdate('laneros_portal_featured', true);
                 }
@@ -65,7 +65,7 @@ class Editor extends XFCP_Editor
 			}
 		}
 
-		if (!$featuredThread->isDeleted()) {
+		if ($thread->laneros_portal_featured && !$featuredThread->isDeleted()) {
 			$featuredThread->save();
 		}
 		

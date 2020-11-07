@@ -23,6 +23,7 @@ class FeaturedThread extends Repository
 			->with('Thread.Forum.Node.Permissions|' . $visitor->permission_combination_id)
 			->with('Thread.FirstPost', true)
 			->with('Thread.FirstPost.User')
+			->where('Thread.laneros_portal_featured', '=', '1')
 			->where('Thread.discussion_type', '<>', 'redirect')
 			->where('Thread.discussion_state', 'visible');
 
