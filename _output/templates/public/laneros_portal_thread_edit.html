@@ -1,0 +1,16 @@
+<xf:if is="($thread.isInsert() AND !$thread.Forum.laneros_portal_auto_feature AND $thread.canFeatureUnfeature())
+	OR ($thread.isUpdate() && $thread.canFeatureUnfeature())"
+>
+	<xf:textboxrow name="featured_title"
+				   value="{$thread.FeaturedThread.featured_title}" 
+				   maxlength="{{ max_length($thread, 'title') }}"
+				   placeholder="{{ phrase('title...') }}"
+				   label="{{ phrase('laneros_portal_featured_title') }}" />
+	
+	<xf:textarearow name="snippet" autosize="true"
+				value="{$thread.FeaturedThread.snippet}" 
+				maxlength="{{ $xf.options.lanerosPortalSnippet.enabled ? $xf.options.lanerosPortalSnippet.length : null }}"
+				label="{{ phrase('laneros_portal_snippet') }}"
+				hint="{{ phrase('laneros_portal_snippet_hint', { 'length': $xf.options.lanerosPortalSnippet.length }) }}"
+				explain="{{ phrase('laneros_portal_snippet_explain') }}" />
+</xf:if>
