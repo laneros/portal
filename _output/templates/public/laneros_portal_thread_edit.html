@@ -1,6 +1,12 @@
 <xf:if is="($thread.isInsert() AND !$thread.Forum.laneros_portal_auto_feature AND $thread.canFeatureUnfeature())
 	OR ($thread.isUpdate() && $thread.canFeatureUnfeature())"
 >
+	
+	<xf:tokeninputrow name="authors" value="{$authors}" href="{{ link('members/find') }}"
+					  label="{{ phrase('laneros_portal_author') }}"
+					  max-tokens="2"
+					  explain="{{ phrase('laneros_portal_author_explain') }}" />
+	
 	<xf:textboxrow name="featured_title"
 				   value="{$thread.FeaturedThread.featured_title}" 
 				   maxlength="{{ max_length($thread, 'title') }}"

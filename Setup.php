@@ -32,6 +32,7 @@ class Setup extends \XF\AddOn\AbstractSetup
 		$this->schemaManager()->createTable('xf_laneros_portal_featured_thread', function(Create $table)
 		{
 			$table->addColumn('thread_id', 'int');
+			$table->addColumn('authors', 'mediumblob');
 			$table->addColumn('featured_date', 'int');
 			$table->addColumn('featured_title', 'text');
 			$table->addColumn('snippet', 'text');

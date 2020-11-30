@@ -13,6 +13,7 @@ class FeaturedThread extends \XF\Mvc\Entity\Entity
 		$structure->primaryKey = 'thread_id';
 		$structure->columns = [
 			'thread_id' => ['type' => self::UINT, 'required' => true],
+			'authors' => ['type' => self::JSON_ARRAY, 'default' => []],
 			'featured_date' => ['type' => self::UINT, 'default' => time()],
 			'featured_title' => ['type' => self::STR, 'default' => ''],
 			'snippet' => ['type' => self::STR, 'default' => ''],
@@ -41,5 +42,22 @@ class FeaturedThread extends \XF\Mvc\Entity\Entity
 				'sticky = 2'
 			);
 		}
+		
+		if (is_array($this->authors)) {
+            $users = [];
+
+            /** @var \XF\Entity\User $user */
+            foreach ($this->authors as $user) {
+                if ($user instanceof \XF\Entity\User) {
+                    $users[$user->user_id] = $user->username;
+                }
+            }
+            $this->authors = $users;
+        }
 	}
+
+	public function getAuthorsList()
+    {
+        return implode(', ', $this->authors);
+    }
 }

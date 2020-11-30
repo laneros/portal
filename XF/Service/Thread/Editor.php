@@ -8,6 +8,7 @@ class Editor extends XFCP_Editor
 	protected $featuredTitle;
 	protected $snippet;
 	protected $featuredSticky;
+	protected $authors;
 
     public function setFeatureThread($featureThread)
     {
@@ -27,6 +28,11 @@ class Editor extends XFCP_Editor
 	public function setFeaturedSticky($sticky)
 	{
 		$this->featuredSticky = $sticky;
+	}
+
+	public function setAuthors($authors)
+	{
+		$this->authors = $authors;
 	}
 
 	protected function _save()
@@ -54,6 +60,7 @@ class Editor extends XFCP_Editor
 
 				$featuredThread->set('featured_title', $this->featuredTitle);
 				$featuredThread->set('snippet', $this->snippet);
+				$featuredThread->set('authors', $this->authors);
             }
 			else
 			{

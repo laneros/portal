@@ -54,6 +54,11 @@ class View extends \XF\Mvc\View
             } else {
                 $featuredThread->Thread->FirstPost->message = '';
             }
+
+            // Modify the authors in case we have one set.
+            if (is_array($featuredThread->authors) && sizeof($featuredThread->authors) > 0) {
+                $featuredThread->Thread->username = implode(', ', $featuredThread->authors);
+            }
         }
     }
 }

@@ -18,6 +18,13 @@ class Thread extends XFCP_Thread
 			$editor->setFeatureThread($this->filter('featured', 'bool'));
 			$editor->setFeatureTitle($this->filter('featured_title', 'str'));
 			$editor->setSnippet($this->filter('snippet', 'str'));
+
+			/** @var \Laneros\Portal\Repository\FeaturedThread $featuredRepo */
+			$featuredRepo = $this->app()->repository('Laneros\Portal:FeaturedThread');
+
+			$authors = $this->filter('authors', 'str');
+			$authors = $featuredRepo->getValidatedAuthors($authors);
+			$editor->setAuthors($authors);
 		}
 
 		return $editor;
@@ -74,5 +81,18 @@ class Thread extends XFCP_Thread
 			];
 			return $this->view('Laneros\Portal:Thread\FeaturedSticky', 'laneros_portal_thread_featured_sticky', $viewParams);
 		}
+	}
+
+	public function actionEdit(ParameterBag $params)
+	{
+		$view = parent::actionEdit($params);
+
+		if ($view instanceof \XF\Mvc\Reply\View) {
+			$thread = $this->assertViewableThread($params->thread_id);
+
+			$view->setParam('authors', $thread->FeaturedThread->getAuthorsList());
+		}
+
+		return $view;
 	}
 }
