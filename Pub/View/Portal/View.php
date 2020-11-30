@@ -31,6 +31,13 @@ class View extends \XF\Mvc\View
     {
         $router = \XF::app()->router('public');
 
+        // If there's a youtube video in the message, extract it as the portal image
+        preg_match('/\[media=youtube]([a-zA-Z0-9\_\-]+)&?\[\/media]/si', $message, $matches);
+
+        if (!empty($matches[1])) {
+            return \Laneros\Portal\Helper\YouTube::getThumbnail($matches[1]);
+        }
+
         // Extract the first post image wether it's from a IMG or ATTACH tag
         preg_match('/\[(img|IMG)\]\s*(https?:\/\/([^*\r\n]+|[a-z0-9\/\\\._\- !]+))\[\/(img|IMG)\]/', $message, $matches);
 
