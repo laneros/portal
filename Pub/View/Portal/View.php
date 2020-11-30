@@ -11,54 +11,58 @@ class View extends \XF\Mvc\View
         $app = \XF::app();
         $stringFormatter = $app->stringFormatter();
 
-        $router = \XF::app()->router('public');
-
-        $snippet = $app->options()->lanerosPortalSnippet;
-
-        $formatter = new Formatter();
-
         /** @var \Laneros\Portal\Repository\FeaturedThread $featuredThread */
         $featuredThreads = $this->getParams();
         foreach ($this->params['featuredThreads'] as $postId => &$featuredThread)
         {
             $message = $featuredThread->Thread->FirstPost->message;
 
-            // Sacamos la primra imagen del post sea de IMG o ATTACH
-            preg_match('/\[(img|IMG)\]\s*(https?:\/\/([^*\r\n]+|[a-z0-9\/\\\._\- !]+))\[\/(img|IMG)\]/', $message, $matches);
+            $this->params['portalImages'][$postId] = $this->extractPortalImage($message);
 
-            $this->params['portalImages'][$postId] = isset($matches[2]) ? $matches[2] : '';
+            $featuredThread->Thread->FirstPost->message = $this->generateSnippet($featuredThread, $stringFormatter);
 
-            // Limpiamos el mensaje de bbcodes / imagenes / espacios
-            $featuredThread->Thread->FirstPost->message = $formatter->stripBbCode($message, ['stripQuote' => true, ]);
-
-            if (empty($featuredThread['portalImages']))
-            {
-                preg_match_all('#\[attach[^\]]*\](?P<id>\d+)(\D.*)?\[/attach\]#iU', $message, $matches);
-
-                if (! empty($matches['id'])) {
-                    $this->params['portalImages'][$postId] = $router->buildLink('full:attachments', ['attachment_id' => $matches['id'][0]]);
-                }
-            }
-
-            // Eliminamos todos los tags innecesarios del mensaje
-            $stripBbCodeOptions = [
-                'stripQuote' => true,
-            ];
-
-            if (!empty($featuredThread->snippet)) {
-                $message = $featuredThread->snippet;
-            }
-
-            if ($snippet['enabled'] == true) {
-                $featuredThread->Thread->FirstPost->message = $stringFormatter->stripBbCode($message, $stripBbCodeOptions);
-            } else {
-                $featuredThread->Thread->FirstPost->message = '';
-            }
-
-            // Modify the authors in case we have one set.
             if (is_array($featuredThread->authors) && sizeof($featuredThread->authors) > 0) {
                 $featuredThread->Thread->username = implode(', ', $featuredThread->authors);
             }
         }
+    }
+
+    protected function extractPortalImage(string $message): string
+    {
+        $router = \XF::app()->router('public');
+
+        // Extract the first post image wether it's from a IMG or ATTACH tag
+        preg_match('/\[(img|IMG)\]\s*(https?:\/\/([^*\r\n]+|[a-z0-9\/\\\._\- !]+))\[\/(img|IMG)\]/', $message, $matches);
+
+        $portalImage = isset($matches[2]) ? $matches[2] : '';
+
+        if (empty($portalImage)) {
+            preg_match_all('#\[attach[^\]]*\](?P<id>\d+)(\D.*)?\[/attach\]#iU', $message, $matches);
+
+            if (!empty($matches['id'])) {
+                $portalImage = $router->buildLink('full:attachments', ['attachment_id' => $matches['id'][0]]);
+            }
+        }
+
+        return $portalImage;
+    }
+
+    protected function generateSnippet(\Laneros\Portal\Entity\FeaturedThread $featuredThread, \XF\Str\Formatter $formatter): string
+    {
+        $snippet = \XF::app()->options()->lanerosPortalSnippet;
+
+        $message = $featuredThread->Thread->FirstPost->message;
+
+        if (!empty($featuredThread->snippet)) {
+            $message = $featuredThread->snippet;
+        }
+
+        if ($snippet['enabled'] == true) {
+            $message = $formatter->stripBbCode($message, ['stripQuote' => true,]);
+        } else {
+            $message = '';
+        }
+
+        return $message;
     }
 }
