@@ -8,4 +8,9 @@ class Thread extends XFCP_Thread
 	{
 		return \XF::visitor()->hasNodePermission($this->node_id, 'lanerosPortalFeature');
 	}
+
+	public function isFeatured()
+	{
+		return $this->laneros_portal_featured && isset($this->FeaturedThread);
+	}
 }

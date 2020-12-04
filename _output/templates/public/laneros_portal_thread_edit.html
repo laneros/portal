@@ -1,5 +1,5 @@
-<xf:if is="($thread.isInsert() AND !$thread.Forum.laneros_portal_auto_feature AND $thread.canFeatureUnfeature())
-	OR ($thread.isUpdate() && $thread.canFeatureUnfeature())"
+<xf:if is="($thread.isInsert() AND $thread.canFeatureUnfeature())
+	OR ($thread.isUpdate() && $thread.isFeatured() && $thread.canFeatureUnfeature())"
 >
 	
 	<xf:tokeninputrow name="authors" value="{$authors}" href="{{ link('members/find') }}"

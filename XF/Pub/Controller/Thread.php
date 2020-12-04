@@ -87,9 +87,10 @@ class Thread extends XFCP_Thread
 	{
 		$view = parent::actionEdit($params);
 
-		if ($view instanceof \XF\Mvc\Reply\View) {
-			$thread = $this->assertViewableThread($params->thread_id);
+		/** @var \Laneros\Portal\XF\Entity\Thread $thread */
+		$thread = $this->assertViewableThread($params->thread_id);
 
+		if ($view instanceof \XF\Mvc\Reply\View && $thread->isFeatured()) {
 			$view->setParam('authors', $thread->FeaturedThread->getAuthorsList());
 		}
 
